@@ -23,7 +23,7 @@ class TranslatorView extends StatelessWidget {
         appBar: AppBar(
             leading: const Icon(Icons.translate_outlined),
             title: const Text('Translator'),
-            backgroundColor: Colors.black),
+            backgroundColor: Colors.green.shade200),
         body: BlocConsumer<TranslatorCubit, TranslatorStates>(
             listener: (context, state) {},
             builder: (context, state) {

@@ -61,10 +61,11 @@ class _TranslatorPageState extends State<TranslatorPage> {
               DropdownButton<String>(
                 value: selectedSource,
                 elevation: 16,
+                 dropdownColor: Colors.brown.shade50,
                 style: const TextStyle(color: Colors.black),
                 underline: Container(
-                  height: 2,
-                  color: Colors.indigo,
+                  height: 3,
+                  color: Colors.deepPurple.shade100,
                 ),
                 onChanged: (String? newValue) {
                   setState(() {
@@ -83,30 +84,42 @@ class _TranslatorPageState extends State<TranslatorPage> {
               height: 25,
             ),
             SizedBox(
-                height: 120,
-                child: TextFormField(
+                height: 150,
+                child: TextField(
                   controller: inputController,
-                  style: const TextStyle(fontSize: 14),
-                  decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 20,
+                  style:    const TextStyle(
+                    fontSize: 18.0, height: 1.0, color: Colors.black),
+                  textInputAction: TextInputAction.newline,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration:  InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
                       ),
                       hintText: 'Enter text',
-                      hintStyle: TextStyle(fontSize: 14),
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.black87, width: 2.0))),
+                      hintStyle: const TextStyle(
+                          fontSize: 14.0, height: 2.0, color: Colors.black),
+                      border: const OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.deepPurple.shade100,
+                            width: 2.0)
+                    )
+
+
+
+                      ),
                 )),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               DropdownButton<String>(
                 value: selectedTarget,
                 elevation: 16,
                 style: const TextStyle(color: Colors.black),
+                dropdownColor: Colors.brown.shade50,
                 underline: Container(
-                  height: 2,
-                  color: Colors.indigo,
+                  height: 3,
+                  color: Colors.deepPurple.shade100,
                 ),
                 onChanged: (String? newValue) {
                   setState(() {
@@ -130,25 +143,41 @@ class _TranslatorPageState extends State<TranslatorPage> {
                   controller: outputController,
                   readOnly: true,
                   style: const TextStyle(
-                      fontSize: 20.0, height: 2.0, color: Colors.black),
+                      fontSize: 18.0, height: 1.0, color: Colors.black),
                   textInputAction: TextInputAction.newline,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
                     border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.black87, width: 2.0)),
-                  )),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.deepPurple.shade100,
+                              width: 2.0),
+
+                  )
+              )
             ),
-            ElevatedButton.icon(
+            ),
+            SizedBox(height: 40,),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green.shade200,
+                    side: BorderSide(color: Colors.green.shade50, width:2),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 10),
+                    textStyle: const TextStyle(
+                        color: Colors.white, fontSize: 20, fontStyle: FontStyle.normal),
+
+
+                ),
+
               onPressed: () {
                 locator.get<TranslatorCubit>().fetchTranslatorPage(TranslatorData( selectedSource, selectedTarget,inputController.text));
 
               },
-              icon: const Icon(Icons.arrow_forward_ios_rounded),
-              label: const Text("Translate"),
-            ),
+
+              child: const Text("Translate")),
+
 
           ]
 
