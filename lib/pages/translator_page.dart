@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translator_app/cubit/translator_cubit.dart';
 import 'package:flutter_translator_app/dependency_injection/locator.dart';
 import 'package:flutter_translator_app/model/translator_data.dart';
-
+import 'package:flutter_translator_app/utils/constants.dart';
 import '../model/translator_result.dart';
 
-const List<String> languages = <String>['en', 'de', 'it', 'tr'];
 
 class TranslatorPage extends StatefulWidget {
   final TranslatorResult? result;
@@ -34,8 +33,8 @@ class _TranslatorPageState extends State<TranslatorPage> {
   @override
   void initState() {
     super.initState();
-    selectedTarget = widget.data?.targetLan ?? languages.first;
-    selectedSource = widget.data?.sourceLan ?? languages.first;
+    selectedTarget = widget.data?.targetLan ?? 'English';
+    selectedSource = widget.data?.sourceLan ?? 'Turkish';
     inputController.text= widget.data?.text ?? '';
     outputController.text=widget.result?.data!.translations?[0].translatedText ?? '';
 
@@ -72,7 +71,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
                     selectedSource = newValue!;
                   });
                 },
-                items: languages.map<DropdownMenuItem<String>>((String value) {
+                items: languages.keys.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -114,7 +113,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
                     selectedTarget = newValue!;
                   });
                 },
-                items: languages.map<DropdownMenuItem<String>>((String value) {
+                items: languages.keys.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),

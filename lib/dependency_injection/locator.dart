@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_translator_app/cubit/translator_cubit.dart';
 import 'package:flutter_translator_app/repository/repository.dart';
-import 'package:flutter_translator_app/utils/constants.dart';
 import 'package:get_it/get_it.dart';
 
 import '../api/translator_api.dart';
+import '../utils/key.dart';
 
 final locator= GetIt.instance;
 
