@@ -1,96 +1,44 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translator_app/cubit/speech_to_text/speech_to_text_cubit.dart';
+import 'package:flutter_translator_app/dependency_injection/locator.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 class SpeechtoText extends StatefulWidget {
-  const SpeechtoText({super.key});
+  final String textSpeech;
+  const SpeechtoText(this.textSpeech,{super.key});
 
   @override
-  State<SpeechtoText> createState() => _SpeechtoTextState();
+  State<SpeechtoText> createState() => _SpeechtoTextState(textSpeech);
 }
 
 class _SpeechtoTextState extends State<SpeechtoText> {
 
-  // Creating instance of speechtoteext package
-  SpeechToText speechToText =SpeechToText();
-  //flag for mic
-  var isListening = false;
-  bool micAvailable = false;
-  String textSpeech= "Click on mic to record";
+  _SpeechtoTextState(String textSpeech);
 
-  // asks the user to access to mic
-  //Invoke the mic
-  void checkMic() async {
-     micAvailable = await speechToText.initialize();
-    //premission granted
-    if(micAvailable){
-      print("Microphone available");
-    }
-    //premission not granted
-    else
-      print("User Denied the use of microphone");
-  }
-
-  @override
-  void initState() {
-  super.initState();
-  checkMic();
+  Future<bool> checkMic() async {
+    bool available = await locator.get<SpeechToText>().initialize();
+    return available;
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:Center(
+    return Center(
         child:SingleChildScrollView(
           child:Column(
             children:[
-              Text(textSpeech),
+              Text(widget.textSpeech),
               GestureDetector(
                 onTap: () async{
-                  if(!isListening){
-                    // If not recording start recording
-                    //asking permission again
-                    micAvailable = await speechToText.initialize();
-
-                    if(micAvailable){
-                      setState(() {
-                        isListening = true;
-                      });
-                      // start audio recording
-                      speechToText.listen(
-                        //listen for 20 seconds and stop
-                        listenFor: Duration(seconds: 5),
-                        onResult: (result){
-                          setState(() {
-                            textSpeech = result.recognizedWords;
-                            isListening= false;
-
-                          });
-                        }
-
-                    );
-
-                    }
-                    else{
-                      setState(() {
-                        isListening= false;
-                        speechToText.stop();
-                      });
-
-
-                    }
-
-                  }
-
+                  locator.get<SpeechCubit>().startListening();
                 },
                 child: CircleAvatar(
-                  child:isListening? Icon(Icons.record_voice_over):Icon(Icons.mic)
+                  child:  true? Icon(Icons.record_voice_over):Icon(Icons.mic)
                 ),
               )
               ]
           )
         )
-        )
-      );
+        );
       }
 
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_translator_app/cubit/translator_cubit.dart';
+import 'package:flutter_translator_app/cubit/translator/translator_cubit.dart';
 import 'package:flutter_translator_app/dependency_injection/locator.dart';
 import 'package:flutter_translator_app/model/translator_data.dart';
 import 'package:flutter_translator_app/utils/constants.dart';

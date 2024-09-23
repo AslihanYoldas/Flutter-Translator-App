@@ -1,6 +1,6 @@
 import 'package:flutter_translator_app/model/translator_data.dart';
 
-import '../model/translator_result.dart';
+import '../../model/translator_result.dart';
 
 abstract class TranslatorStates{}
 

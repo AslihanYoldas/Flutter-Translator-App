@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_translator_app/cubit/translator_states.dart';
+import 'package:flutter_translator_app/cubit/translator/translator_states.dart';
 import 'package:flutter_translator_app/model/translator_result.dart';
 
-import '../dependency_injection/locator.dart';
-import '../model/translator_data.dart';
-import '../repository/repository.dart';
+import '../../dependency_injection/locator.dart';
+import '../../model/translator_data.dart';
+import '../../repository/repository.dart';
 
 class TranslatorCubit extends Cubit<TranslatorStates>{
   final _repository = locator.get<Repository>();
