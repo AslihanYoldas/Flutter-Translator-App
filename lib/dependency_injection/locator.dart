@@ -43,6 +43,7 @@ class DependencyInjection {
   void provideSpeechToTextObject(){
     locator.registerLazySingleton<SpeechToText>(()=>SpeechToText());
 
+
   }
 
 }

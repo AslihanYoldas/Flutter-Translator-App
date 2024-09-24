@@ -15,7 +15,7 @@ class SpeechListeningState extends SpeechStates{
 
 }
 
-class SpeechListeningStopedState extends SpeechStates{
+class SpeechListeningStoppedState extends SpeechStates{
 
 }
 class ErrorState extends SpeechStates{
