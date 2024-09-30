@@ -5,7 +5,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 
 
 class SpeechCubit extends Cubit<SpeechStates>{
-  SpeechCubit():super(InitState());
+  SpeechCubit():super(InitialState());
   final SpeechToText _speechToText=locator.get<SpeechToText>();
   void initialize() async {
     bool available = await _speechToText.initialize();
@@ -16,17 +16,17 @@ class SpeechCubit extends Cubit<SpeechStates>{
       emit(MicNotAvailableState());
     }
   }
-  void stopListening() async {
+  /*void stopListening() async {
     await _speechToText.stop();
     emit(SpeechListeningStoppedState());
-  }
+  }*/
 
-  void startListening() async {
+  void startListening(String? sourceLan, String? targetLan) async {
 
-      emit(SpeechListeningState());
+      emit(SpeechListeningState(sourceLan,targetLan));
       await _speechToText.listen(
           onResult: (result) {
-            emit(SpeechResult(result.recognizedWords));
+            emit(SpeechResult(result.recognizedWords,sourceLan,targetLan));
           }
       );
 

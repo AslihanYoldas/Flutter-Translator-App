@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
-Widget buildTextField(TextEditingController controller, {bool readOnly = false}) {
+import 'package:flutter/material.dart';
+import 'package:flutter_translator_app/widgets/speech_to_text_alert_dialog.dart';
+Widget buildTextField(context,TextEditingController controller, String? sourceLan, String? targetLan, {bool readOnly = false}) {
   return TextField(
     controller: controller,
     readOnly: readOnly,
@@ -10,6 +10,7 @@ Widget buildTextField(TextEditingController controller, {bool readOnly = false})
     keyboardType: TextInputType.multiline,
     maxLines: null,
     decoration: InputDecoration(
+      suffixIcon: readOnly ? null : buildGestureDetector(context,sourceLan,targetLan),
       contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       hintText: readOnly ? null : 'Enter text',
       border: const OutlineInputBorder(),
@@ -19,3 +20,15 @@ Widget buildTextField(TextEditingController controller, {bool readOnly = false})
     ),
   );
 }
+ Widget buildGestureDetector(context,String? sourceLan, String? targetLan) {
+   return GestureDetector(
+     onTap: () async {
+       Navigator.of(context).push(MaterialPageRoute(builder: (context) => SpeechToTextAlertDialog ("Tap to Start Listening",sourceLan,targetLan)));
+
+     },
+     child: const CircleAvatar(
+         child: Icon(Icons.mic)
+     ),
+   );
+
+ }

@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translator_app/cubit/translator/translator_cubit.dart';
 import 'package:flutter_translator_app/dependency_injection/locator.dart';
 import 'package:flutter_translator_app/model/translator_data.dart';
-import '../model/translator_result.dart';
 import '../widgets/dropdown_widget.dart';
 import '../widgets/text_field_widget.dart';
 
 class TranslatorPage extends StatefulWidget {
-  final TranslatorResult? result;
-  final TranslatorData? data;
+  final String? inputData;
+  final String? outputData;
+  final String? sourceLan;
+  final String? targetLan;
 
 
-  const TranslatorPage(this.result, this.data, {super.key});
+  const TranslatorPage(this.inputData, this.outputData, this.sourceLan, this.targetLan, {super.key});
 
   @override
   State<TranslatorPage> createState() => _TranslatorPageState();
@@ -30,10 +31,10 @@ class _TranslatorPageState extends State<TranslatorPage> {
   @override
   void initState() {
     super.initState();
-    selectedSource = widget.data?.sourceLan ?? 'Turkish';
-    selectedTarget = widget.data?.targetLan ?? 'English';
-    inputController = TextEditingController(text: widget.data?.text ?? '');
-    outputController = TextEditingController(text: widget.result?.data?.translations?[0].translatedText ?? '');
+    selectedSource = widget.sourceLan ?? 'Turkish';
+    selectedTarget = widget.targetLan ?? 'English';
+    inputController = TextEditingController(text: widget.inputData?? '');
+    outputController = TextEditingController(text: widget.outputData ?? '');
 
 
   }
@@ -65,7 +66,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
             ),
 
             const SizedBox(height: 25,),
-            buildTextField(inputController),
+            buildTextField(context,inputController,widget.sourceLan,widget.targetLan),
             const SizedBox(height: 25,),
             buildDropdown(selectedTarget,
                     (value) {
@@ -75,6 +76,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
                     }
             ),
+            buildTextField(context,outputController, widget.sourceLan,widget.targetLan, readOnly: true),
             const SizedBox(height: 40),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(

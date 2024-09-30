@@ -11,9 +11,9 @@ class InitState extends TranslatorStates{
 class LoadingState extends TranslatorStates{
 
 }
-class ErrorState extends TranslatorStates{
+class TranslatorErrorState extends TranslatorStates{
   final String message;
-  ErrorState(this.message);
+  TranslatorErrorState(this.message);
 }
 
 class ResponseState extends TranslatorStates{
