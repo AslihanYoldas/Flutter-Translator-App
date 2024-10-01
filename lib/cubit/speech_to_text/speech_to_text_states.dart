@@ -12,9 +12,7 @@ class MicNotAvailableState extends SpeechStates{
 
 }
 class SpeechListeningState extends SpeechStates{
-  String? sourceLan;
-  String? targetLan;
-  SpeechListeningState(this.sourceLan,this.targetLan);
+
 
 }
 
@@ -28,7 +26,6 @@ class SpeechErrorState extends SpeechStates{
 
 class SpeechResult extends SpeechStates{
   String recognizedWords;
-  String? sourceLan;
-  String? targetLan;
-  SpeechResult(this.recognizedWords,this.sourceLan,this.targetLan);
+
+  SpeechResult(this.recognizedWords);
 }

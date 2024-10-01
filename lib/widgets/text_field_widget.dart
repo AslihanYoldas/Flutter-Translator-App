@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_translator_app/widgets/speech_to_text_alert_dialog.dart';
+import 'package:flutter_translator_app/widgets/bottom_sheet_widget.dart';
 Widget buildTextField(context,TextEditingController controller, String? sourceLan, String? targetLan, {bool readOnly = false}) {
   return TextField(
     controller: controller,
@@ -23,11 +23,12 @@ Widget buildTextField(context,TextEditingController controller, String? sourceLa
  Widget buildGestureDetector(context,String? sourceLan, String? targetLan) {
    return GestureDetector(
      onTap: () async {
-       Navigator.of(context).push(MaterialPageRoute(builder: (context) => SpeechToTextAlertDialog ("Tap to Start Listening",sourceLan,targetLan)));
+       Navigator.of(context).push(MaterialPageRoute(builder: (context) => speechBottomSheet(context,"Tap to mic") ));
 
      },
      child: const CircleAvatar(
          child: Icon(Icons.mic)
+
      ),
    );
 

@@ -21,3 +21,8 @@ class ResponseState extends TranslatorStates{
   TranslatorResult result;
   ResponseState(this.result,this.data);
 }
+class LanguageSetState extends TranslatorStates{
+  final String? sourceLanguage;
+  final String? targetLanguage;
+  LanguageSetState(this.sourceLanguage, this.targetLanguage);
+}

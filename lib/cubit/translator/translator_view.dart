@@ -5,7 +5,7 @@ import 'package:flutter_translator_app/cubit/translator/translator_cubit.dart';
 import 'package:flutter_translator_app/cubit/translator/translator_states.dart';
 import 'package:flutter_translator_app/dependency_injection/locator.dart';
 import 'package:flutter_translator_app/pages/translator_page.dart';
-import 'package:flutter_translator_app/widgets/speech_to_text_alert_dialog.dart';
+import 'package:flutter_translator_app/widgets/bottom_sheet_widget.dart';
 import '../speech_to_text/speech_to_text_states.dart';
 
 class TranslatorView extends StatelessWidget {
@@ -20,7 +20,11 @@ class TranslatorView extends StatelessWidget {
             create: (context) => locator.get<TranslatorCubit>(),
           ),
           BlocProvider<SpeechCubit>(
-            create: (context) => locator.get<SpeechCubit>(),
+          create: (context){
+          final cubit = locator.get<SpeechCubit>();
+          cubit.initialize(); // Initialize directly when cubit is created
+          return cubit;
+          }
           ),
 
         ],
@@ -61,17 +65,21 @@ class TranslatorView extends StatelessWidget {
                 }),
 
         BlocConsumer<SpeechCubit, SpeechStates>(
-            listener: (context, state) {},
-            builder: (context, state) {
+            listener: (context, state) {
               if (state is InitialState) {
+                debugPrint('Speech inital state');
                 locator.get<SpeechCubit>().initialize();
 
               }
               else if (state is SpeechResult) {
                 debugPrint("RESPONSE STATE");
-                return TranslatorPage(state.recognizedWords,null,state.sourceLan,state.targetLan);
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => speechBottomSheet(context,state.recognizedWords) ));
               }
-              else if (state is MicAvailableState) {
+
+            },
+            builder: (context, state) {
+
+               if (state is MicAvailableState) {
                 debugPrint("Mic Available");
 
               }
@@ -81,16 +89,12 @@ class TranslatorView extends StatelessWidget {
               }
               else if(state is SpeechListeningState){
                 debugPrint("SpeechListeningState");
-                return  SpeechToTextAlertDialog("Listening",state.sourceLan,state.targetLan);
               }
               /*else if(state is SpeechListeningStoppedState){
                 debugPrint("SpeechListeningStoppedState");
-                return ;
               }*/
-              else {
-                final error = state as SpeechErrorState;
-                return Text(error.message);
-              }
+
+
               return const Center(child: Text(''));
 
 

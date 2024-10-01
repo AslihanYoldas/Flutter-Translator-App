@@ -23,16 +23,16 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   late TextEditingController inputController;
   late TextEditingController outputController;
-  String? selectedSource;
-  String? selectedTarget;
+  String? sourceLan;
+  String? targetLan;
 
 
 
   @override
   void initState() {
     super.initState();
-    selectedSource = widget.sourceLan ?? 'Turkish';
-    selectedTarget = widget.targetLan ?? 'English';
+    sourceLan = widget.sourceLan ?? 'Turkish';
+    targetLan = widget.targetLan ?? 'English';
     inputController = TextEditingController(text: widget.inputData?? '');
     outputController = TextEditingController(text: widget.outputData ?? '');
 
@@ -55,24 +55,23 @@ class _TranslatorPageState extends State<TranslatorPage> {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            buildDropdown(selectedSource,
+            buildDropdown(sourceLan,
                   //callback func passed to the widget
                 //when dropdown item changed this function will be triggered
                   (value){//lambda function defined with ()
-                    setState(() {
-                      selectedSource = value;
-                   });
+                      sourceLan=value;
+                      locator.get<TranslatorCubit>().setLanguages( value,locator.get<TranslatorCubit>().targetLanguage);
+
                   }
             ),
 
             const SizedBox(height: 25,),
             buildTextField(context,inputController,widget.sourceLan,widget.targetLan),
             const SizedBox(height: 25,),
-            buildDropdown(selectedTarget,
+            buildDropdown(targetLan,
                     (value) {
-                      setState(() {
-                        selectedTarget = value;
-                      });
+
+                      locator.get<TranslatorCubit>().setLanguages(locator.get<TranslatorCubit>().sourceLanguage, value);
 
                     }
             ),
@@ -87,7 +86,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
                         color: Colors.white, fontSize: 20, fontStyle: FontStyle.normal)
                 ),
               onPressed: () {
-                locator.get<TranslatorCubit>().fetchTranslatorPage(TranslatorData( selectedSource, selectedTarget,inputController.text));
+                locator.get<TranslatorCubit>().fetchTranslatorPage(TranslatorData( sourceLan, targetLan,inputController.text));
               },
               child: const Text("Translate")),
           ]
