@@ -11,7 +11,7 @@ class TranslatorCubit extends Cubit<TranslatorStates>{
   final _repository = locator.get<Repository>();
   TranslatorCubit():super(InitState());
 
-  Future<void>fetchTranslatorPage(TranslatorData? data) async{
+  Future<void>fetchResultTranslatorPage(TranslatorData? data) async{
     emit(LoadingState());
     try{
       final response = await _repository.fetchTranslateResult(data!);
@@ -28,5 +28,11 @@ class TranslatorCubit extends Cubit<TranslatorStates>{
     targetLanguage = target;
     emit(LanguageSetState(sourceLanguage, targetLanguage));
   }
+
+  void fetchTranslatorPageAfterSpeech(String? input) {
+
+    emit(SpeechResultState(input));
+  }
+
 
 }

@@ -26,3 +26,8 @@ class LanguageSetState extends TranslatorStates{
   final String? targetLanguage;
   LanguageSetState(this.sourceLanguage, this.targetLanguage);
 }
+
+class SpeechResultState extends TranslatorStates{
+  final String? inputData;
+  SpeechResultState(this.inputData);
+}

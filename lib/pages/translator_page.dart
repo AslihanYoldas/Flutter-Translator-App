@@ -86,7 +86,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
                         color: Colors.white, fontSize: 20, fontStyle: FontStyle.normal)
                 ),
               onPressed: () {
-                locator.get<TranslatorCubit>().fetchTranslatorPage(TranslatorData( sourceLan, targetLan,inputController.text));
+                locator.get<TranslatorCubit>().fetchResultTranslatorPage((TranslatorData( sourceLan, targetLan,inputController.text)));
               },
               child: const Text("Translate")),
           ]

@@ -58,6 +58,9 @@ class TranslatorView extends StatelessWidget {
                         state.data.sourceLan,
                         state.data.targetLan);
                   }
+                  else if(state is SpeechResultState){
+                    return TranslatorPage(state.inputData, null, locator.get<TranslatorCubit>().sourceLanguage, locator.get<TranslatorCubit>().sourceLanguage);
+                  }
                   else {
                     final error = state as TranslatorErrorState;
                     return Text(error.message);
@@ -67,13 +70,20 @@ class TranslatorView extends StatelessWidget {
         BlocConsumer<SpeechCubit, SpeechStates>(
             listener: (context, state) {
               if (state is InitialState) {
-                debugPrint('Speech inital state');
-                locator.get<SpeechCubit>().initialize();
+                debugPrint('Speech initial state');
+                //locator.get<SpeechCubit>().initialize();
 
               }
               else if (state is SpeechResult) {
                 debugPrint("RESPONSE STATE");
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => speechBottomSheet(context,state.recognizedWords) ));
+                if (state.recognizedWords.isNotEmpty) {
+                  Navigator.pop(context);
+                  speechBottomSheet(context, state.recognizedWords);
+                }
+              }
+              else if(state is SpeechListeningState){
+                debugPrint("SpeechListeningState");
+                speechBottomSheet(context, "Listening");
               }
 
             },
@@ -87,9 +97,7 @@ class TranslatorView extends StatelessWidget {
                 debugPrint("MIC NOT AVAILABLE");
 
               }
-              else if(state is SpeechListeningState){
-                debugPrint("SpeechListeningState");
-              }
+
               /*else if(state is SpeechListeningStoppedState){
                 debugPrint("SpeechListeningStoppedState");
               }*/

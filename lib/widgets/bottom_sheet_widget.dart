@@ -1,49 +1,75 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 import '../cubit/speech_to_text/speech_to_text_cubit.dart';
 import '../cubit/translator/translator_cubit.dart';
 import '../dependency_injection/locator.dart';
-import '../utils/navigation.dart';
-Widget speechBottomSheet(BuildContext context,String text,) {
-      return Container(
-        height: 100,
-        color: Colors.black12,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-               Text(text,
-              style: const TextStyle(fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.white
-              ),
 
+  speechBottomSheet(BuildContext context,String text, ) {
+    showModalBottomSheet(
+       context: context,
+       builder: (context) =>
+           Container(
+          height: MediaQuery.of(context).size.height * 0.75,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25.0),
+              topRight: Radius.circular(25.0),
+            ),
+            color: Colors.white70,
           ),
-
-              ElevatedButton(
-                child: const Text('OK'),
-                onPressed: () => navigateToTranslator(context,text,locator.get<TranslatorCubit>().sourceLanguage,locator.get<TranslatorCubit>().targetLanguage)
-              ),
-              ElevatedButton.icon(
-                icon:  Icon(
-                  locator.get<SpeechCubit>().isListening?Icons.mic:Icons.mic_off,
-                  color: Colors.grey,
-                  size: 30.0,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  text,
+                  style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 ),
-                label: const Text(''),
+                const SizedBox(height: 50,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        locator.get<TranslatorCubit>().fetchTranslatorPageAfterSpeech(text);
 
-                onPressed: () {
-                  locator.get<SpeechCubit>().startListening();
-                },
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green.shade200,
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                          textStyle:
+                              const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      child: const Text('OK'),
+                    ),
+                const SizedBox(width: 50,),
 
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-
-
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green.shade200,
+                      padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      textStyle:
+                      const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                  icon: Icon(
+                    Icons.mic,
+                    color: Colors.white70,
+                    size: 30.0,
+                  ),
+                  label: const Text(''),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    locator.get<SpeechCubit>().startListening();
+                  },
+                ),
+                  ],
+                ),
+              ],
+            ),
+          )));
+}
