@@ -14,7 +14,7 @@ class Repository {
       debugPrint(data.targetLan);
       debugPrint(data.sourceLan);
       TranslatorResult response = await _api.getTranslateResult(data.text ?? "", languages[data.sourceLan] ?? 'en', languages[data.targetLan]??'tr',data.format);
-      debugPrint(response.data?.translations?[0].translatedText);
+      debugPrint("Repo = ${response.data?.translations?[0].translatedText}");
       return response;
     }
     catch(e){

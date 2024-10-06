@@ -38,77 +38,75 @@ class TranslatorView extends StatelessWidget {
             leading: const Icon(Icons.translate_outlined),
             title: const Text('Translator'),
             backgroundColor: Colors.green.shade200),
-        body: Column(
-          children: [
-            BlocConsumer<TranslatorCubit, TranslatorStates>(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  if (state is InitState) {
-                    return const TranslatorPage(null,null,null,null);
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              BlocConsumer<TranslatorCubit, TranslatorStates>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state is InitState) {
+                      return const TranslatorPage(null,null,null,null);
 
-                  }
-                  else if (state is LoadingState) {
-                    return buildLoading();
-                  }
-                  else if (state is ResponseState) {
-                    debugPrint("RESPONSE STATE");
-                    return TranslatorPage(
-                        state.data.text,
-                        state.result.data?.translations?[0].translatedText,
-                        state.data.sourceLan,
-                        state.data.targetLan);
-                  }
-                  else if(state is SpeechResultState){
-                    return TranslatorPage(state.inputData, null, locator.get<TranslatorCubit>().sourceLanguage, locator.get<TranslatorCubit>().sourceLanguage);
-                  }
-                  else {
-                    final error = state as TranslatorErrorState;
-                    return Text(error.message);
-                  }
-                }),
+                    }
+                    else if (state is LoadingState) {
+                      return buildLoading();
+                    }
+                    else if (state is ResponseState) {
+                      debugPrint("RESPONSE STATE");
+                      return TranslatorPage(
+                          state.inputData,
+                          state.outputData,
+                          state.sourceLan,
+                          state.targetLan);
+                    }
 
-        BlocConsumer<SpeechCubit, SpeechStates>(
-            listener: (context, state) {
-              if (state is InitialState) {
-                debugPrint('Speech initial state');
-                //locator.get<SpeechCubit>().initialize();
+                    return const Center(child: Text(''));
 
-              }
-              else if (state is SpeechResult) {
-                debugPrint("RESPONSE STATE");
-                if (state.recognizedWords.isNotEmpty) {
-                  Navigator.pop(context);
-                  speechBottomSheet(context, state.recognizedWords);
+                  }),
+
+          BlocConsumer<SpeechCubit, SpeechStates>(
+              listener: (context, state) {
+                if (state is InitialState) {
+                  debugPrint('Speech initial state');
+                  //locator.get<SpeechCubit>().initialize();
+
                 }
-              }
-              else if(state is SpeechListeningState){
-                debugPrint("SpeechListeningState");
-                speechBottomSheet(context, "Listening");
-              }
+                else if (state is SpeechResult) {
+                  debugPrint("RESPONSE STATE");
+                  if (state.recognizedWords.isNotEmpty) {
+                    Navigator.pop(context);
+                    speechBottomSheet(context, state.recognizedWords);
+                  }
+                }
+                else if(state is SpeechListeningState){
+                  debugPrint("SpeechListeningState");
+                  speechBottomSheet(context, "Listening");
+                }
 
-            },
-            builder: (context, state) {
+              },
+              builder: (context, state) {
 
-               if (state is MicAvailableState) {
-                debugPrint("Mic Available");
+                 if (state is MicAvailableState) {
+                  debugPrint("Mic Available");
 
-              }
-              else if (state is MicNotAvailableState) {
-                debugPrint("MIC NOT AVAILABLE");
+                }
+                else if (state is MicNotAvailableState) {
+                  debugPrint("MIC NOT AVAILABLE");
 
-              }
+                }
 
-              /*else if(state is SpeechListeningStoppedState){
-                debugPrint("SpeechListeningStoppedState");
-              }*/
-
-
-              return const Center(child: Text(''));
+                /*else if(state is SpeechListeningStoppedState){
+                  debugPrint("SpeechListeningStoppedState");
+                }*/
 
 
+                return const Center(child: Text(''));
 
-            })
-          ]
+
+
+              })
+            ]
+          ),
         ),
 
     );

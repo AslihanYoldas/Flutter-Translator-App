@@ -16,23 +16,42 @@ class TranslatorCubit extends Cubit<TranslatorStates>{
     try{
       final response = await _repository.fetchTranslateResult(data!);
       debugPrint('Response : $response');
-      emit(ResponseState((response!),(data)));
+      emit(ResponseState(
+          data.text,
+          response?.data?.translations?[0].translatedText,
+          data.sourceLan,
+          data.targetLan));
     }
     catch(e){
       debugPrint('CUBIT ERROR : ${e.toString()}');
     }
 
   }
+
+  void fetchTranslatorPage(String inputData) {
+    emit(LoadingState());
+    try{
+      debugPrint('Speech Response in Cubit : $inputData');
+      emit(ResponseState(
+          inputData,
+          null,
+          sourceLanguage,
+          targetLanguage));
+    }
+    catch(e){
+      debugPrint('CUBIT ERROR : ${e.toString()}');
+    }
+
+  }
+
+
   void setLanguages(String? source, String? target) {
     sourceLanguage = source;
     targetLanguage = target;
     emit(LanguageSetState(sourceLanguage, targetLanguage));
   }
 
-  void fetchTranslatorPageAfterSpeech(String? input) {
 
-    emit(SpeechResultState(input));
-  }
 
 
 }

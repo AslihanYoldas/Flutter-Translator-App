@@ -15,7 +15,7 @@ Widget buildTextField(context,TextEditingController controller, String? sourceLa
       textAlign: TextAlign.start,
       maxLines: null,
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.fromLTRB(20, 0, 10, 200),
+        contentPadding: const  EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         suffixIcon: readOnly ? null : buildGestureDetector(context,sourceLan,targetLan),
         hintText: readOnly ? null : 'Enter text',
         border: const OutlineInputBorder(),

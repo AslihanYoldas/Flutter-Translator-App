@@ -36,7 +36,7 @@ import '../dependency_injection/locator.dart';
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        locator.get<TranslatorCubit>().fetchTranslatorPageAfterSpeech(text);
+                        locator.get<TranslatorCubit>().fetchTranslatorPage(text);
 
                       },
                       style: ElevatedButton.styleFrom(
@@ -56,7 +56,7 @@ import '../dependency_injection/locator.dart';
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                       textStyle:
                       const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.mic,
                     color: Colors.white70,
                     size: 30.0,

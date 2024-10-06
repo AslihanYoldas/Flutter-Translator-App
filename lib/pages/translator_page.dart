@@ -28,6 +28,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
 
 
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +36,21 @@ class _TranslatorPageState extends State<TranslatorPage> {
     targetLan = widget.targetLan ?? 'English';
     inputController = TextEditingController(text: widget.inputData?? '');
     outputController = TextEditingController(text: widget.outputData ?? '');
+
+
+  }
+
+  // Update input and output when redisplaying page
+  @override
+  void didUpdateWidget(covariant TranslatorPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.inputData != oldWidget.inputData) {
+      inputController.text = widget.inputData ?? '';
+    }
+
+    if (widget.outputData != oldWidget.outputData) {
+      outputController.text = widget.outputData ?? '';
+    }
 
 
   }
@@ -48,6 +64,8 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    debugPrint("Here");
     return Container(
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.all(10.0),

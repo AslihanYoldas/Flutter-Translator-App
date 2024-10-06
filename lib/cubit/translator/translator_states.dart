@@ -17,9 +17,11 @@ class TranslatorErrorState extends TranslatorStates{
 }
 
 class ResponseState extends TranslatorStates{
-  TranslatorData data;
-  TranslatorResult result;
-  ResponseState(this.result,this.data);
+  final String? inputData;
+  final String? outputData;
+  final String? sourceLan;
+  final String? targetLan;
+  ResponseState(this.inputData,this.outputData,this.sourceLan,this.targetLan);
 }
 class LanguageSetState extends TranslatorStates{
   final String? sourceLanguage;
@@ -27,7 +29,3 @@ class LanguageSetState extends TranslatorStates{
   LanguageSetState(this.sourceLanguage, this.targetLanguage);
 }
 
-class SpeechResultState extends TranslatorStates{
-  final String? inputData;
-  SpeechResultState(this.inputData);
-}
