@@ -25,9 +25,10 @@ class DependencyInjection {
                 contentType: 'application/json',
                 headers: {
                   'x-rapidapi-key': KEY,
-                  'x-rapidapi-host': "google-translator9.p.rapidapi.com",
-                }
-            )))
+                  'x-rapidapi-host':  "free-google-translator.p.rapidapi.com",
+                },
+            ),
+        ))
     );
   }
 

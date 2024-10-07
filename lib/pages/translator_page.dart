@@ -64,9 +64,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    debugPrint("Here");
-    return Container(
+     return Container(
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.all(10.0),
       width: 500,

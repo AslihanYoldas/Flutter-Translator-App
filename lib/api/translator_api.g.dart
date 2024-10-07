@@ -12,48 +12,56 @@ class _RestClient implements RestClient {
   _RestClient(
     this._dio, {
     this.baseUrl,
+    this.errorLogger,
   }) {
-    baseUrl ??= 'https://google-translator9.p.rapidapi.com';
+    baseUrl ??=
+        'https://free-google-translator.p.rapidapi.com/external-api/free-google-translator';
   }
 
   final Dio _dio;
 
   String? baseUrl;
 
+  final ParseErrorLogger? errorLogger;
+
   @override
   Future<TranslatorResult> getTranslateResult(
+    String sourceLan,
+    String targetLan,
     String text,
-    String source_lan,
-    String target_lan,
-    String format,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'q': text,
-      r'source': source_lan,
-      r'target': target_lan,
-      r'format': format,
+      r'from': sourceLan,
+      r'to': targetLan,
+      r'query': text,
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<TranslatorResult>(Options(
+    final _options = _setStreamType<TranslatorResult>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '/v2',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final _value = TranslatorResult.fromJson(_result.data!);
+        .compose(
+          _dio.options,
+          '',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late TranslatorResult _value;
+    try {
+      _value = TranslatorResult.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
     return _value;
   }
 

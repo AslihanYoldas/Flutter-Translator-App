@@ -17,8 +17,8 @@ class TranslatorCubit extends Cubit<TranslatorStates>{
       final response = await _repository.fetchTranslateResult(data!);
       debugPrint('Response : $response');
       emit(ResponseState(
-          data.text,
-          response?.data?.translations?[0].translatedText,
+          response?.query,
+          response?.translation,
           data.sourceLan,
           data.targetLan));
     }

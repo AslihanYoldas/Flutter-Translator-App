@@ -1,56 +1,23 @@
 class TranslatorResult {
-  Data? data;
-
-  TranslatorResult({this.data});
+  int? status;
+  String? query;
+  String? translateTo;
+  String? translation;
 
   TranslatorResult.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    status = json['status'] as int;
+    query = json['query'] as String;
+    translateTo = json['translateTo'] as String;
+    translation = json['translation'] as String;
   }
+
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
-}
-
-class Data {
-  List<Translations>? translations;
-
-  Data({this.translations});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    if (json['translations'] != null) {
-      translations = <Translations>[];
-      json['translations'].forEach((v) {
-        translations!.add(new Translations.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.translations != null) {
-      data['translations'] = this.translations!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Translations {
-  String? translatedText;
-
-  Translations({this.translatedText});
-
-  Translations.fromJson(Map<String, dynamic> json) {
-    translatedText = json['translatedText'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['translatedText'] = this.translatedText;
-    return data;
+    return {
+      'status': status,
+      'query': query,
+      'translateTo': translateTo,
+      'translation': translation,
+    };
   }
 }
