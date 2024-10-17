@@ -37,7 +37,6 @@ class _TranslatorPageState extends State<TranslatorPage> {
     inputController = TextEditingController(text: widget.inputData?? '');
     outputController = TextEditingController(text: widget.outputData ?? '');
 
-
   }
 
   // Update input and output when redisplaying page
@@ -75,9 +74,10 @@ class _TranslatorPageState extends State<TranslatorPage> {
                   //callback func passed to the widget
                 //when dropdown item changed this function will be triggered
                   (value){//lambda function defined with ()
-                      sourceLan=value;
-                      locator.get<TranslatorCubit>().setLanguages( value,locator.get<TranslatorCubit>().targetLanguage);
-
+              setState(() {
+                sourceLan=value;
+                locator.get<TranslatorCubit>().setLanguages( value,locator.get<TranslatorCubit>().targetLanguage);
+              });
                   }
             ),
 
@@ -86,9 +86,10 @@ class _TranslatorPageState extends State<TranslatorPage> {
             const SizedBox(height: 25,),
             buildDropdown(targetLan,
                     (value) {
-
+                    setState(() {
+                      targetLan=value;
                       locator.get<TranslatorCubit>().setLanguages(locator.get<TranslatorCubit>().sourceLanguage, value);
-
+                    });
                     }
             ),
             buildTextField(context,outputController, widget.sourceLan,widget.targetLan, readOnly: true),

@@ -48,7 +48,6 @@ class TranslatorCubit extends Cubit<TranslatorStates>{
   void setLanguages(String? source, String? target) {
     sourceLanguage = source;
     targetLanguage = target;
-    emit(LanguageSetState(sourceLanguage, targetLanguage));
   }
 
 

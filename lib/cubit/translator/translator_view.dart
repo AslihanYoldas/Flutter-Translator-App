@@ -49,7 +49,7 @@ class TranslatorView extends StatelessWidget {
 
                     }
                     else if (state is LoadingState) {
-                      return buildLoading();
+                      return buildLoading(context);
                     }
                     else if (state is ResponseState) {
                       debugPrint("RESPONSE STATE");
@@ -111,9 +111,14 @@ class TranslatorView extends StatelessWidget {
 
     );
   }
-  Center buildLoading() {
-    return const Center(
-      child: CircularProgressIndicator(),
+  Container buildLoading(context) {
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      alignment: Alignment.center,
+      child: CircularProgressIndicator(
+          color: Colors.deepPurple.shade200,
+
+      ),
     );
   }
 
