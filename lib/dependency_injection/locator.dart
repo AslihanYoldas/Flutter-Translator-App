@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_translator_app/cubit/speech_to_text/speech_to_text_cubit.dart';
+import 'package:flutter_translator_app/cubit/theme/theme_cubit.dart';
 import 'package:flutter_translator_app/cubit/translator/translator_cubit.dart';
 import 'package:flutter_translator_app/repository/repository.dart';
 import 'package:get_it/get_it.dart';
@@ -39,6 +40,7 @@ class DependencyInjection {
   void provideViewModels() {
     locator.registerLazySingleton<TranslatorCubit>(() => TranslatorCubit());
     locator.registerLazySingleton<SpeechCubit>(() => SpeechCubit());
+    locator.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
   }
 
   void provideSpeechToTextObject(){

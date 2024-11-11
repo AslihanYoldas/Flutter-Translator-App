@@ -15,7 +15,6 @@ import '../dependency_injection/locator.dart';
               topLeft: Radius.circular(25.0),
               topRight: Radius.circular(25.0),
             ),
-            color: Colors.white70,
           ),
           child: Center(
             child: Column(
@@ -24,10 +23,11 @@ import '../dependency_injection/locator.dart';
               children: <Widget>[
                 Text(
                   text,
-                  style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                  style:  TextStyle(
+                    color:  Theme.of(context).highlightColor,
+                      fontSize: 23,
+                    fontWeight: FontWeight.w700
+                      ),
                 ),
                 const SizedBox(height: 50,),
                 Row(
@@ -40,26 +40,28 @@ import '../dependency_injection/locator.dart';
 
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green.shade200,
+                          backgroundColor: Theme.of(context).primaryColor,
+                          foregroundColor: Theme.of(context).focusColor,
                           padding:
-                              const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                              const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
                           textStyle:
-                              const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                              const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                       child: const Text('OK'),
                     ),
                 const SizedBox(width: 50,),
 
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green.shade200,
+                      backgroundColor: Theme.of(context).primaryColor,
+                      foregroundColor: Theme.of(context).focusColor,
                       padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      alignment: Alignment.center,
                       textStyle:
                       const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
                   icon: const Icon(
                     Icons.mic,
-                    color: Colors.white70,
-                    size: 30.0,
+                    size: 27.0,
                   ),
                   label: const Text(''),
                   onPressed: () {

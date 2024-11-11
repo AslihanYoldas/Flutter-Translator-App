@@ -44,3 +44,4 @@ app.*.map.json
 /android/app/release
 
 /lib/utils/key.dart
+/lib/TO DO LIST

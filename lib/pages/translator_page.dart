@@ -70,7 +70,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            buildDropdown(sourceLan,
+            buildDropdown(context,sourceLan,
                   //callback func passed to the widget
                 //when dropdown item changed this function will be triggered
                   (value){//lambda function defined with ()
@@ -84,7 +84,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
             const SizedBox(height: 25,),
             buildTextField(context,inputController,widget.sourceLan,widget.targetLan),
             const SizedBox(height: 25,),
-            buildDropdown(targetLan,
+            buildDropdown(context,targetLan,
                     (value) {
                     setState(() {
                       targetLan=value;
@@ -93,19 +93,24 @@ class _TranslatorPageState extends State<TranslatorPage> {
                     }
             ),
             buildTextField(context,outputController, widget.sourceLan,widget.targetLan, readOnly: true),
-            const SizedBox(height: 40),
+            const SizedBox(height: 50),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green.shade200,
-                    side: BorderSide(color: Colors.green.shade50, width:2),
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                    textStyle: const TextStyle(
-                        color: Colors.white, fontSize: 20, fontStyle: FontStyle.normal)
-                ),
               onPressed: () {
                 locator.get<TranslatorCubit>().fetchResultTranslatorPage((TranslatorData( sourceLan, targetLan,inputController.text)));
               },
-              child: const Text("Translate")),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColor,
+                  foregroundColor: Theme.of(context).focusColor,
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                  textStyle:
+                   TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+              child: const Text('Translate'),
+
+            ),
+
+
+
           ]
 
         ),

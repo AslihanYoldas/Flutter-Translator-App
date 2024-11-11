@@ -7,6 +7,7 @@ import 'package:flutter_translator_app/dependency_injection/locator.dart';
 import 'package:flutter_translator_app/pages/translator_page.dart';
 import 'package:flutter_translator_app/widgets/bottom_sheet_widget.dart';
 import '../speech_to_text/speech_to_text_states.dart';
+import '../theme/theme_cubit.dart';
 
 class TranslatorView extends StatelessWidget {
   const TranslatorView({super.key});
@@ -26,18 +27,38 @@ class TranslatorView extends StatelessWidget {
           return cubit;
           }
           ),
+          BlocProvider<ThemeCubit>(
+            create: (context) => locator.get<ThemeCubit>(),
+          ),
 
         ],
-      child: buildScaffold(),
+      child: BlocBuilder<ThemeCubit, ThemeData>(
+        builder: (context, theme) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: theme,
+            home: buildScaffold(context),
+          );
+        },
+      ),
     );
   }
 
-  Scaffold buildScaffold() {
-    return Scaffold(
+  Scaffold buildScaffold(context) {
+    return Scaffold( 
         appBar: AppBar(
             leading: const Icon(Icons.translate_outlined),
             title: const Text('Translator'),
-            backgroundColor: Colors.green.shade200),
+            actions:<Widget>[
+              IconButton(
+                icon: const Icon(Icons.light_mode_sharp),
+                onPressed:(){
+                  locator.get<ThemeCubit>().toggleTheme();
+              },
+              )
+            ],
+
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
