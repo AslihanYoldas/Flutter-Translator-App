@@ -66,7 +66,7 @@ class TranslatorView extends StatelessWidget {
                   listener: (context, state) {},
                   builder: (context, state) {
                     if (state is InitState) {
-                      return const TranslatorPage(null,null,null,null);
+                      locator.get<TranslatorCubit>().fetchTranslatorPage("");
 
                     }
                     else if (state is LoadingState) {
@@ -74,6 +74,7 @@ class TranslatorView extends StatelessWidget {
                     }
                     else if (state is ResponseState) {
                       debugPrint("RESPONSE STATE");
+                      debugPrint("${state.sourceLan},${ state.targetLan}");
                       return TranslatorPage(
                           state.inputData,
                           state.outputData,
@@ -137,7 +138,7 @@ class TranslatorView extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       alignment: Alignment.center,
       child: CircularProgressIndicator(
-          color: Colors.deepPurple.shade200,
+          color: Theme.of(context).focusColor,
 
       ),
     );

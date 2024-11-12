@@ -4,6 +4,8 @@ import '../../utils/constants.dart';
 
 Widget buildDropdown(context,String? value, ValueChanged<String?> onChanged) {
   return DropdownButton<String>(
+    padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+    alignment: Alignment.topLeft,
     value: value,
     elevation: 16,
     style: TextStyle(color:Theme.of(context).focusColor ),

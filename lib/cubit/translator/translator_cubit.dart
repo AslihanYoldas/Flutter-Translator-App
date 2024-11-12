@@ -6,8 +6,8 @@ import '../../model/translator_data.dart';
 import '../../repository/repository.dart';
 
 class TranslatorCubit extends Cubit<TranslatorStates>{
-  String? sourceLanguage;
-  String? targetLanguage;
+  String sourceLanguage = "Turkish";
+  String targetLanguage = "English";
   final _repository = locator.get<Repository>();
   TranslatorCubit():super(InitState());
 
@@ -45,9 +45,16 @@ class TranslatorCubit extends Cubit<TranslatorStates>{
   }
 
 
-  void setLanguages(String? source, String? target) {
+  void setLanguages(String source, String target) {
     sourceLanguage = source;
     targetLanguage = target;
+  }
+
+  void reverseLanguages(String input){
+   setLanguages(targetLanguage, sourceLanguage);
+   debugPrint("${sourceLanguage},${targetLanguage}");
+    fetchTranslatorPage(input);
+
   }
 
 

@@ -27,13 +27,12 @@ class _TranslatorPageState extends State<TranslatorPage> {
   String? targetLan;
 
 
-
-
   @override
   void initState() {
     super.initState();
-    sourceLan = widget.sourceLan ?? 'Turkish';
-    targetLan = widget.targetLan ?? 'English';
+    sourceLan = widget.sourceLan;
+    targetLan = widget.targetLan ;
+    debugPrint("$sourceLan,${targetLan}");
     inputController = TextEditingController(text: widget.inputData?? '');
     outputController = TextEditingController(text: widget.outputData ?? '');
 
@@ -50,6 +49,13 @@ class _TranslatorPageState extends State<TranslatorPage> {
     if (widget.outputData != oldWidget.outputData) {
       outputController.text = widget.outputData ?? '';
     }
+    if (widget.sourceLan != oldWidget.sourceLan) {
+      sourceLan = widget.sourceLan ;
+    }
+    if (widget.targetLan != oldWidget.targetLan) {
+      targetLan = widget.targetLan ;
+    }
+
 
 
   }
@@ -64,34 +70,55 @@ class _TranslatorPageState extends State<TranslatorPage> {
   @override
   Widget build(BuildContext context) {
      return Container(
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(10.0),
       width: 500,
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            buildDropdown(context,sourceLan,
-                  //callback func passed to the widget
-                //when dropdown item changed this function will be triggered
-                  (value){//lambda function defined with ()
-              setState(() {
-                sourceLan=value;
-                locator.get<TranslatorCubit>().setLanguages( value,locator.get<TranslatorCubit>().targetLanguage);
-              });
-                  }
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                buildDropdown(context,sourceLan,
+                      //callback func passed to the widget
+                    //when dropdown item changed this function will be triggered
+                      (value){//lambda function defined with ()
+                  setState(() {
+                    sourceLan=value;
+                    locator.get<TranslatorCubit>().setLanguages( value!,locator.get<TranslatorCubit>().targetLanguage);
+                  });
+                      }
+                ),
+                IconButton(
+                  onPressed: () {
+                    locator.get<TranslatorCubit>().reverseLanguages(inputController.text);
+                  },
+                  icon:  const Icon(
+                    Icons.compare_arrows_rounded,
+                    size: 32,
+                  ),
+                  style: IconButton.styleFrom(
+                      foregroundColor: Theme.of(context).focusColor,
+                      backgroundColor: Theme.of(context).brightness== Brightness.light?Colors.white24 : Colors.black54),
+                ),
+                ]),
 
-            const SizedBox(height: 25,),
+
             buildTextField(context,inputController,widget.sourceLan,widget.targetLan),
             const SizedBox(height: 25,),
-            buildDropdown(context,targetLan,
-                    (value) {
-                    setState(() {
-                      targetLan=value;
-                      locator.get<TranslatorCubit>().setLanguages(locator.get<TranslatorCubit>().sourceLanguage, value);
-                    });
-                    }
-            ),
+
+           Row(
+             children: [
+               buildDropdown(context,targetLan,
+                          (value) {
+                          setState(() {
+                            targetLan=value;
+                            locator.get<TranslatorCubit>().setLanguages(locator.get<TranslatorCubit>().sourceLanguage, value!);
+                          });
+                          }
+                  ),
+             ],
+           ),
             buildTextField(context,outputController, widget.sourceLan,widget.targetLan, readOnly: true),
             const SizedBox(height: 50),
             ElevatedButton(
@@ -111,10 +138,12 @@ class _TranslatorPageState extends State<TranslatorPage> {
 
 
 
-          ]
-
+      ],
         ),
-      ),
+     )
     );
+
+
+
   }
 }
