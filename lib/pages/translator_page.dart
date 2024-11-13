@@ -75,41 +75,42 @@ class _TranslatorPageState extends State<TranslatorPage> {
       width: 500,
       child: SingleChildScrollView(
         child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                buildDropdown(context,sourceLan,
-                      //callback func passed to the widget
-                    //when dropdown item changed this function will be triggered
-                      (value){//lambda function defined with ()
-                  setState(() {
-                    sourceLan=value;
-                    locator.get<TranslatorCubit>().setLanguages( value!,locator.get<TranslatorCubit>().targetLanguage);
-                  });
-                      }
-                ),
-                IconButton(
-                  onPressed: () {
-                    locator.get<TranslatorCubit>().reverseLanguages(inputController.text);
-                  },
-                  icon:  const Icon(
-                    Icons.compare_arrows_rounded,
-                    size: 32,
-                  ),
-                  style: IconButton.styleFrom(
-                      foregroundColor: Theme.of(context).focusColor,
-                      backgroundColor: Theme.of(context).brightness== Brightness.light?Colors.white24 : Colors.black54),
-                ),
-                ]),
 
+          children: <Widget>[
+            Container(
+              alignment: Alignment.topLeft,
+              child: buildDropdown(context,sourceLan,
+                    //callback func passed to the widget
+                  //when dropdown item changed this function will be triggered
+                    (value){//lambda function defined with ()
+                setState(() {
+                  sourceLan=value;
+                  locator.get<TranslatorCubit>().setLanguages( value!,locator.get<TranslatorCubit>().targetLanguage);
+                });
+                    }
+              ),
+            ),
 
             buildTextField(context,inputController,widget.sourceLan,widget.targetLan),
-            const SizedBox(height: 25,),
-
-           Row(
-             children: [
-               buildDropdown(context,targetLan,
+            Container(
+              alignment: Alignment.topLeft,
+              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+              child: IconButton(
+                onPressed: () {
+                  locator.get<TranslatorCubit>().reverseLanguages(inputController.text);
+                },
+                icon:  const Icon(
+                  Icons.compare_arrows_rounded,
+                  size: 32,
+                ),
+                style: IconButton.styleFrom(
+                    foregroundColor: Theme.of(context).focusColor,
+                    backgroundColor: Theme.of(context).brightness== Brightness.light?Colors.white24 : Colors.black54),
+              ),
+            ),
+            Container(
+              alignment: Alignment.topLeft,
+                child:buildDropdown(context,targetLan,
                           (value) {
                           setState(() {
                             targetLan=value;
@@ -117,8 +118,8 @@ class _TranslatorPageState extends State<TranslatorPage> {
                           });
                           }
                   ),
-             ],
-           ),
+            ),
+
             buildTextField(context,outputController, widget.sourceLan,widget.targetLan, readOnly: true),
             const SizedBox(height: 50),
             ElevatedButton(
