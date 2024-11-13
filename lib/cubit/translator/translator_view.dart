@@ -66,7 +66,11 @@ class TranslatorView extends StatelessWidget {
                   listener: (context, state) {},
                   builder: (context, state) {
                     if (state is InitState) {
-                      locator.get<TranslatorCubit>().fetchTranslatorPage("");
+                      return TranslatorPage(
+                          null,
+                          null,
+                          locator.get<TranslatorCubit>().sourceLanguage,
+                          locator.get<TranslatorCubit>().targetLanguage);
 
                     }
                     else if (state is LoadingState) {
@@ -120,12 +124,7 @@ class TranslatorView extends StatelessWidget {
                 /*else if(state is SpeechListeningStoppedState){
                   debugPrint("SpeechListeningStoppedState");
                 }*/
-
-
                 return const Center(child: Text(''));
-
-
-
               })
             ]
           ),
