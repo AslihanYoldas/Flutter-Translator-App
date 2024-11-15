@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_translator_app/model/translator_data.dart';
 import 'package:flutter_translator_app/utils/constants.dart';
@@ -17,11 +18,22 @@ class Repository {
       debugPrint("Repo = ${response.translation}");
       return response;
     }
-    catch(e){
-      debugPrint('REPO ERROR:${e.toString()}');
-      return null;
+    on DioException catch(e){
+      if(e.type==DioExceptionType.connectionTimeout) {
+        debugPrint('Connection Timeout Excption');
+      } else if(e.type==DioExceptionType.receiveTimeout) {
+        debugPrint('Receive Timeout Exception');
+      }
+      else if(e.type==DioExceptionType.badResponse) {
+        debugPrint('Received Bad Response: ${e.response?.statusCode}');
+      }
+      else{
+        debugPrint('Dio Error:${e.message}');
+      }
+    }catch(e){
+      debugPrint('Repo Error:${e.toString()}');
     }
-
+    return null;
 
   }
 }

@@ -9,7 +9,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 import '../api/translator_api.dart';
 import '../utils/key.dart';
 
-final locator= GetIt.instance;
+final locator = GetIt.instance;
 
 class DependencyInjection {
   DependencyInjection() {
@@ -20,17 +20,15 @@ class DependencyInjection {
   }
 
   void provideApi() {
-    locator.registerLazySingleton<RestClient>(() =>
-        RestClient(Dio(
-            BaseOptions(
-                contentType: 'application/json',
-                headers: {
-                  'x-rapidapi-key': KEY,
-                  'x-rapidapi-host':  "free-google-translator.p.rapidapi.com",
-                },
-            ),
-        ))
-    );
+    locator.registerLazySingleton<RestClient>(() => RestClient(Dio(
+          BaseOptions(
+            contentType: 'application/json',
+            headers: {
+              'x-rapidapi-key': KEY,
+              'x-rapidapi-host': "free-google-translator.p.rapidapi.com",
+            },
+          ),
+        )));
   }
 
   void provideRepositories() {
@@ -43,10 +41,7 @@ class DependencyInjection {
     locator.registerLazySingleton<ThemeCubit>(() => ThemeCubit());
   }
 
-  void provideSpeechToTextObject(){
-    locator.registerLazySingleton<SpeechToText>(()=>SpeechToText());
-
-
+  void provideSpeechToTextObject() {
+    locator.registerLazySingleton<SpeechToText>(() => SpeechToText());
   }
-
 }
