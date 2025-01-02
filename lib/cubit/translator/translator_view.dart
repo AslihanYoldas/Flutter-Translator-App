@@ -89,13 +89,19 @@ class TranslatorView extends StatelessWidget {
               }
             } else if (state is SpeechListeningState) {
               debugPrint("SpeechListeningState");
-              Navigator.maybePop(context);
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
               speechBottomSheet(context, "Listening");
 
             }
             else if (state is SpeechListeningStopped) {
-              Navigator.pop(context);
-              Navigator.pop(context);
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+              }
               speechBottomSheet(context, "Try again");
             }
 

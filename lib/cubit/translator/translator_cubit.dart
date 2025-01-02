@@ -27,7 +27,7 @@ class TranslatorCubit extends Cubit<TranslatorStates> {
   void fetchTranslatorPage(String inputData) {
     try {
       debugPrint('Speech Response in Cubit : $inputData');
-      if(inputData =="Listening" || inputData =="Try again"){
+      if(inputData =="Listening" || inputData =="Try again" || inputData =="Tap to mic"){
         inputData="";
       }
       emit(ResponseState(inputData, null, sourceLanguage, targetLanguage));

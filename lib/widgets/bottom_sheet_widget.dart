@@ -47,7 +47,7 @@ speechBottomSheet(
                           backgroundColor: Theme.of(context).primaryColor,
                           foregroundColor: Theme.of(context).focusColor,
                           elevation: 5,
-                          padding: const EdgeInsets.symmetric(vertical:25, horizontal: 25),
+                          padding: const EdgeInsets.symmetric(vertical:24, horizontal: 24),
                           alignment: Alignment.center,
 
                           textStyle: const TextStyle(
@@ -66,12 +66,10 @@ speechBottomSheet(
                             backgroundColor: Theme.of(context).primaryColor,
                             foregroundColor: Theme.of(context).focusColor,
                             elevation: 5,
-                            padding: const EdgeInsets.symmetric(vertical:20, horizontal: 20),
-
-                            alignment: Alignment.center,
+                            padding: const EdgeInsets.only(left:20, top:20, right:14, bottom: 20),
                             textStyle: const TextStyle(
                                 fontSize: 10, fontWeight: FontWeight.bold)),
-                        icon:  Icon(
+                        icon:  const Icon(
                           Icons.mic,
                           size: 27.0,
                         ),
