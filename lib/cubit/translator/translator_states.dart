@@ -1,6 +1,5 @@
-import 'package:flutter_translator_app/cubit/base_cubit/base_states.dart';
 
-abstract class TranslatorStates extends BaseStates {}
+abstract class TranslatorStates {}
 
 class TranslatorInitialState extends TranslatorStates {}
 
@@ -12,4 +11,12 @@ class ResponseState extends TranslatorStates {
 
   ResponseState(
       this.inputData, this.outputData, this.sourceLan, this.targetLan);
+
+}
+
+class LoadingState extends TranslatorStates {}
+
+class ErrorState extends TranslatorStates{
+  String message;
+  ErrorState(this.message) ;
 }

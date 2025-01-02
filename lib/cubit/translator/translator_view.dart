@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_translator_app/cubit/base_cubit/base_states.dart';
 import 'package:flutter_translator_app/cubit/speech_to_text/speech_to_text_cubit.dart';
 import 'package:flutter_translator_app/cubit/translator/translator_cubit.dart';
 import 'package:flutter_translator_app/cubit/translator/translator_states.dart';
 import 'package:flutter_translator_app/dependency_injection/locator.dart';
 import 'package:flutter_translator_app/pages/translator_page.dart';
-import 'package:flutter_translator_app/widgets/bottom_sheet_widget.dart';
 import '../../widgets/loading_widget.dart';
 import '../speech_to_text/speech_to_text_states.dart';
 import '../theme/theme_cubit.dart';
+import 'package:flutter_translator_app/widgets/bottom_sheet_widget.dart';
 
 class TranslatorView extends StatelessWidget {
   const TranslatorView({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,12 +85,20 @@ class TranslatorView extends StatelessWidget {
               debugPrint("RESPONSE STATE");
               if (state.recognizedWords.isNotEmpty) {
                 Navigator.pop(context);
+                Navigator.pop(context);
                 speechBottomSheet(context, state.recognizedWords);
               }
             } else if (state is SpeechListeningState) {
               debugPrint("SpeechListeningState");
               speechBottomSheet(context, "Listening");
+
             }
+            else if (state is SpeechListeningStopped) {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              speechBottomSheet(context, "Try again");
+            }
+
           }, builder: (context, state) {
             if (state is MicAvailableState) {
               debugPrint("Mic Available");

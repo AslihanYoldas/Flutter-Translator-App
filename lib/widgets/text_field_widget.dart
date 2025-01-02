@@ -21,20 +21,20 @@ Widget buildTextField(context, TextEditingController controller,
         maxLines: null,
         decoration: InputDecoration(
           contentPadding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           suffixIcon: readOnly
               ? buildSuffixIconsOutput(context, controller)
               : buildSuffixIconsInput(
-                  context, controller, sourceLan, targetLan),
+              context, controller, sourceLan, targetLan),
           hintText: readOnly ? null : 'Enter text',
           border: OutlineInputBorder(
             borderSide:
-                BorderSide(color: Colors.grey.withOpacity(0.4), width: 1.0),
+            BorderSide(color: Colors.grey.withOpacity(0.4), width: 1.0),
             borderRadius: const BorderRadius.all(Radius.circular(4.0)),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide:
-                BorderSide(color: Theme.of(context).focusColor, width: 1.0),
+            BorderSide(color: Theme.of(context).focusColor, width: 1.0),
             borderRadius: const BorderRadius.all(Radius.circular(4.0)),
           ),
         ),

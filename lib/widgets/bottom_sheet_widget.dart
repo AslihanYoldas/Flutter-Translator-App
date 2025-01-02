@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_translator_app/animation/ripple_effect_animation.dart';
 import '../cubit/speech_to_text/speech_to_text_cubit.dart';
 import '../cubit/translator/translator_cubit.dart';
 import '../dependency_injection/locator.dart';
 
 speechBottomSheet(
-  BuildContext context,
-  String text,
-) {
+    BuildContext context,
+    String text,
+    ) {
   showModalBottomSheet(
       context: context,
       builder: (context) => Container(
@@ -45,8 +46,10 @@ speechBottomSheet(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor,
                           foregroundColor: Theme.of(context).focusColor,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 35, vertical: 20),
+                          elevation: 5,
+                          padding: const EdgeInsets.symmetric(vertical:25, horizontal: 25),
+                          alignment: Alignment.center,
+
                           textStyle: const TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold)),
                       child: const Text('OK'),
@@ -54,25 +57,31 @@ speechBottomSheet(
                     const SizedBox(
                       width: 50,
                     ),
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).primaryColor,
-                          foregroundColor: Theme.of(context).focusColor,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 15),
-                          alignment: Alignment.center,
-                          textStyle: const TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.bold)),
-                      icon: const Icon(
-                        Icons.mic,
-                        size: 27.0,
+                    Stack(
+                      alignment: Alignment.center,
+                      children:[
+                        const RippleAnimation(),
+                        ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).primaryColor,
+                            foregroundColor: Theme.of(context).focusColor,
+                            elevation: 5,
+                            padding: const EdgeInsets.symmetric(vertical:20, horizontal: 20),
+
+                            alignment: Alignment.center,
+                            textStyle: const TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.bold)),
+                        icon:  Icon(
+                          Icons.mic,
+                          size: 27.0,
+                        ),
+                        label: const Text(''),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          locator.get<SpeechCubit>().startListening();
+                        },
                       ),
-                      label: const Text(''),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        locator.get<SpeechCubit>().startListening();
-                      },
-                    ),
+                    ]),
                   ],
                 ),
               ],

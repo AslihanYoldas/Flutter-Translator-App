@@ -5,7 +5,7 @@ import 'package:flutter_translator_app/model/translator_data.dart';
 import '../widgets/dropdown_widget.dart';
 import '../widgets/text_field_widget.dart';
 
-class TranslatorPage extends StatefulWidget {
+class TranslatorPage extends StatefulWidget  {
   final String? inputData;
   final String? outputData;
   final String? sourceLan;

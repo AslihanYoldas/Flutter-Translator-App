@@ -1,8 +1,6 @@
-import 'package:flutter_translator_app/cubit/base_cubit/base_cubit.dart';
 
-import '../base_cubit/base_states.dart';
 
-abstract class SpeechStates extends BaseStates{}
+abstract class SpeechStates {}
 
 class SpeechInitialState extends SpeechStates{
 
@@ -18,10 +16,18 @@ class MicNotAvailableState extends SpeechStates{
 class SpeechListeningState extends SpeechStates{
 
 }
+class SpeechListeningStopped extends SpeechStates{
+
+}
 
 
 class SpeechResult extends SpeechStates{
   String recognizedWords;
 
   SpeechResult(this.recognizedWords);
+}
+
+class SpeechErrorState extends SpeechStates{
+  String message;
+  SpeechErrorState(this.message);
 }
