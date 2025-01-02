@@ -85,11 +85,11 @@ class TranslatorView extends StatelessWidget {
               debugPrint("RESPONSE STATE");
               if (state.recognizedWords.isNotEmpty) {
                 Navigator.pop(context);
-                Navigator.pop(context);
                 speechBottomSheet(context, state.recognizedWords);
               }
             } else if (state is SpeechListeningState) {
               debugPrint("SpeechListeningState");
+              Navigator.maybePop(context);
               speechBottomSheet(context, "Listening");
 
             }
