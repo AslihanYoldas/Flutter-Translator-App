@@ -4,10 +4,11 @@ import 'package:retrofit/retrofit.dart';
 import '../model/translator_result.dart';
 part 'translator_api.g.dart';
 
-@RestApi(baseUrl: 'https://free-google-translator.p.rapidapi.com/external-api/free-google-translator')
+@RestApi(baseUrl: 'https://text-translator2.p.rapidapi.com')
 abstract class RestClient{
   factory RestClient(Dio dio, {String baseUrl}) =_RestClient;
-  @POST("")
-  Future<TranslatorResult>getTranslateResult(@Query('from') String sourceLan,@Query('to') String targetLan, @Query('query') String text);
+  @POST("/translate")
+  @MultiPart()
+  Future<TranslatorResult>getTranslateResult(@Part(name:'source_language') String sourceLan,@Part(name:'target_language') String targetLan, @Part(name:'text') String text);
 
 }

@@ -14,8 +14,7 @@ class _RestClient implements RestClient {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??=
-        'https://free-google-translator.p.rapidapi.com/external-api/free-google-translator';
+    baseUrl ??= 'https://text-translator2.p.rapidapi.com';
   }
 
   final Dio _dio;
@@ -31,21 +30,30 @@ class _RestClient implements RestClient {
     String text,
   ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'from': sourceLan,
-      r'to': targetLan,
-      r'query': text,
-    };
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'source_language',
+      sourceLan,
+    ));
+    _data.fields.add(MapEntry(
+      'target_language',
+      targetLan,
+    ));
+    _data.fields.add(MapEntry(
+      'text',
+      text,
+    ));
     final _options = _setStreamType<TranslatorResult>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
         .compose(
           _dio.options,
-          '',
+          '/translate',
           queryParameters: queryParameters,
           data: _data,
         )

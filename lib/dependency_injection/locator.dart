@@ -22,10 +22,10 @@ class DependencyInjection {
   void provideApi() {
     locator.registerLazySingleton<RestClient>(() => RestClient(Dio(
           BaseOptions(
-            contentType: 'application/json',
+            contentType: 'application/x-www-form-urlencoded',
             headers: {
               'x-rapidapi-key': KEY,
-              'x-rapidapi-host': "free-google-translator.p.rapidapi.com",
+              'x-rapidapi-host': "text-translator2.p.rapidapi.com",
             },
           ),
         )));
