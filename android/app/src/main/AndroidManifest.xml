@@ -10,7 +10,7 @@
         </intent>
     </queries>
     <application
-        android:label="flutter_translator_app"
+        android:label="Flutter Translator App"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
