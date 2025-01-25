@@ -13,7 +13,7 @@ class SpeechCubit extends Cubit<SpeechStates> {
     try {
       bool available = await _speechToText.initialize(
           onStatus: (status) => _onStatusChanged(status),
-          onError: (error) => emit(SpeechErrorState('Error: $error')),
+          onError: (error) => emit(SpeechErrorState('Speech Initialization Error: $error')),
       );
 
       if (available) {

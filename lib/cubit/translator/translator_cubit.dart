@@ -17,8 +17,12 @@ class TranslatorCubit extends Cubit<TranslatorStates> {
     try {
       final response = await _repository.fetchTranslateResult(data!);
       debugPrint('Response : $response');
-      emit(ResponseState(data.text, response?.data?.translatedText, data.sourceLan,
-          data.targetLan));
+      if (response?.data?.translatedText != null) {
+        emit(ResponseState(data.text, response?.data?.translatedText, data.sourceLan, data.targetLan));
+      } else {
+        emit(ErrorState('Response is null'));
+      }
+
     } catch (e) {
       emit(ErrorState('Translator Cubit Result Error : ${e.toString()}'));
     }

@@ -7,6 +7,7 @@ This is a Flutter-based Translator App designed to translate text and provide sp
 - Text Translation: Translate text between various languages.
 - Speech-to-Text: Recognize speech input and convert it into text.
 - Dynamic Theme: Switch between light and dark themes.
+- Animation : Ripple Effect Animation during microphone listening.
 
 ## Usage
 
@@ -55,7 +56,7 @@ Press the "Translate" button to see the translated text in the output field. To 
 
 
 ## API Integration
-The app retrieves data from [Free Google Translator](https://rapidapi.com/joshimuddin8212/api/free-google-translator) through Rapid API. Network requests are managed using Retrofit and Dio for efficient data handling and real-time translations.
+The app retrieves data from [Text Translator](https://rapidapi.com/dickyagustin/api/text-translator2) through Rapid API. Network requests are managed using Retrofit and Dio for efficient data handling and real-time translations.
 
 
 ## Architecture
@@ -70,11 +71,12 @@ The app’s state management is handled using Cubit from the flutter_bloc packag
 
 ## Acknowledgments
 
-- Free Google Translator API : For providing translator functionality
+- Text Translator API : For providing translator functionality ([https://rapidapi.com/dickyagustin/api/text-translator2])
 - speech_to_text package : For recognizing speech input. ([speech_to_text-link](https://pub.dev/packages/speech_to_text)
 - retrofit and dio packages: For network requests. ([retrofit-link](https://pub.dev/packages/retrofit),[dio-link](https://pub.dev/packages/dio)
 - flutter_bloc package : For the Cubit state management. ([block-link](https://pub.dev/packages/flutter_bloc))
 - get_it package : For dependency injection. ([get_it-link](https://pub.dev/packages/get_it))
+- MyPainter class, Animation, Animation Controller : For the ripple effect animation.
 - Flutter : For the framework.
 
 ## Contributing

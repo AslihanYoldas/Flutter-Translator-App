@@ -59,7 +59,17 @@ class TranslatorView extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(children: [
           BlocConsumer<TranslatorCubit, TranslatorStates>(
-              listener: (context, state) {},
+              listener: (context, state) {
+                if(state is ErrorState){
+                ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                content: Text("Translator Error : ${state.message}")
+                )
+                );
+                locator.get<TranslatorCubit>().fetchTranslatorPage("");
+
+                }
+              },
               builder: (context, state) {
                 if (state is TranslatorInitialState) {
                   return TranslatorPage(
@@ -104,6 +114,14 @@ class TranslatorView extends StatelessWidget {
               }
               speechBottomSheet(context, "Try again");
             }
+            else if(state is SpeechErrorState){
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text("Speech Error : ${state.message}")
+                  ));
+              locator.get<TranslatorCubit>().fetchTranslatorPage("");
+                  }
+
 
           }, builder: (context, state) {
             if (state is MicAvailableState) {
