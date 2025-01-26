@@ -92,7 +92,7 @@ class _TranslatorPageState extends State<TranslatorPage> {
                   onPressed: () {
                     locator
                         .get<TranslatorCubit>()
-                        .reverseLanguages(inputController.text);
+                        .reverseLanguages(inputController.text,outputController.text);
                   },
                   icon: const Icon(
                     Icons.compare_arrows_rounded,

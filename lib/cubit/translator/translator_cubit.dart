@@ -28,13 +28,13 @@ class TranslatorCubit extends Cubit<TranslatorStates> {
     }
   }
 
-  void fetchTranslatorPage(String inputData) {
+  void fetchTranslatorPage(String inputData, String outputData) {
     try {
       debugPrint('Speech Response in Cubit : $inputData');
       if(inputData =="Listening" || inputData =="Try again" || inputData =="Tap to mic"){
         inputData="";
       }
-      emit(ResponseState(inputData, null, sourceLanguage, targetLanguage));
+      emit(ResponseState(inputData, outputData, sourceLanguage, targetLanguage));
     } catch (e) {
       emit(
           ErrorState('Translator Cubit Translator Page Error : ${e.toString()}'));
@@ -46,8 +46,8 @@ class TranslatorCubit extends Cubit<TranslatorStates> {
     targetLanguage = target;
   }
 
-  void reverseLanguages(String input) {
+  void reverseLanguages(String input, String output) {
     setLanguages(targetLanguage, sourceLanguage);
-    fetchTranslatorPage(input);
+    fetchTranslatorPage(output,input);
   }
 }

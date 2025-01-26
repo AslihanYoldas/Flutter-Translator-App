@@ -66,7 +66,7 @@ class TranslatorView extends StatelessWidget {
                 content: Text("Translator Error : ${state.message}")
                 )
                 );
-                locator.get<TranslatorCubit>().fetchTranslatorPage("");
+                locator.get<TranslatorCubit>().fetchTranslatorPage("","");
 
                 }
               },
@@ -119,7 +119,7 @@ class TranslatorView extends StatelessWidget {
                   SnackBar(
                       content: Text("Speech Error : ${state.message}")
                   ));
-              locator.get<TranslatorCubit>().fetchTranslatorPage("");
+              locator.get<TranslatorCubit>().fetchTranslatorPage("","");
                   }
 
 

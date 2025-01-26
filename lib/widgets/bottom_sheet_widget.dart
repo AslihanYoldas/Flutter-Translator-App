@@ -41,7 +41,7 @@ speechBottomSheet(
                         Navigator.pop(context);
                         locator
                             .get<TranslatorCubit>()
-                            .fetchTranslatorPage(text);
+                            .fetchTranslatorPage(text,"");
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).primaryColor,
