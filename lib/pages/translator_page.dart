@@ -32,6 +32,15 @@ class _TranslatorPageState extends State<TranslatorPage> {
     targetLan = widget.targetLan;
     inputController = TextEditingController(text: widget.inputData ?? '');
     outputController = TextEditingController(text: widget.outputData ?? '');
+
+    //When input cleared also clear output
+    inputController.addListener(() {
+      if(inputController.text.isEmpty){
+       setState(() {
+         outputController.text ="";
+       });
+      }
+    });
   }
 
   // Update input and output when redisplaying page

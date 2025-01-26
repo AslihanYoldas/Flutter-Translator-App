@@ -23,12 +23,17 @@ speechBottomSheet(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(
-                  text,
-                  style: TextStyle(
-                      color: Theme.of(context).highlightColor,
-                      fontSize: 23,
-                      fontWeight: FontWeight.w700),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    text,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    style: TextStyle(
+                        color: Theme.of(context).highlightColor,
+                        fontSize: 23,
+                        fontWeight: FontWeight.w700),
+                  ),
                 ),
                 const SizedBox(
                   height: 50,
