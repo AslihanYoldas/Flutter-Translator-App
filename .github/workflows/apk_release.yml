@@ -1,0 +1,93 @@
+name: "Apk Build & Release"
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - test
+  push:
+    branches:
+      - dev
+      - test
+
+jobs:
+  build:
+    name: Build & Release new apk
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - run : flutter pub get
+
+
+      - name: Build APK
+        env:
+            KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+            KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+            KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          flutter build apk --release \
+          --dart-define=KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} \
+          --dart-define=KEY_ALIAS=${{ secrets.KEY_ALIAS }} \
+          --dart-define=KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
+          
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: Releases
+          path: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/bundle/release/app-release.aab
+            build/ios_build.tar.gz
+
+
+      - name: Extract version from pubspec.yaml
+        id: extract_version
+        run: |
+          version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
+          echo "VERSION=$version" >> $GITHUB_ENV
+
+
+      - name: Check if Tag Exists
+        id: check_tag
+        run: |
+          if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
+            echo "TAG_EXISTS=true" >> $GITHUB_ENV
+          else
+            echo "TAG_EXISTS=false" >> $GITHUB_ENV
+          fi
+
+
+      - name: Modify Tag
+        if: env.TAG_EXISTS == 'true'
+        id: modify_tag
+        run: |
+          new_version="${{ env.VERSION }}-build-${{ github.run_number }}"
+          echo "VERSION=$new_version" >> $GITHUB_ENV
+
+      - name: Upload APK to Release
+      - uses: svenstaro/upload-release-action@v2
+        with:
+            repo_token: ${{ secrets.TOKEN }}
+            artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab,build/ios_build.tar.gz"
+            tag: v${{ env.VERSION }}
+            overwrite: true
+            body: "Signed APK Release"
+
+
+
+
