@@ -38,20 +38,20 @@ jobs:
         with:
           channel: 'stable'
 
-      - run : flutter pub get
+      - run: flutter pub get
 
 
       - name: Build APK
         env:
-            KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-            KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-            KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           flutter build apk --release \
           --dart-define=KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} \
           --dart-define=KEY_ALIAS=${{ secrets.KEY_ALIAS }} \
           --dart-define=KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
-          
+
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
@@ -88,13 +88,13 @@ jobs:
           echo "VERSION=$new_version" >> $GITHUB_ENV
 
       - name: Upload APK to Release
-      - uses: svenstaro/upload-release-action@v2
+        uses: svenstaro/upload-release-action@v2
         with:
-            repo_token: ${{ secrets.GITHUB_TOKEN }}
-            artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab,build/ios_build.tar.gz"
-            tag: v${{ env.VERSION }}
-            overwrite: true
-            body: "Signed APK Release"
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab,build/ios_build.tar.gz"
+          tag: v${{ env.VERSION }}
+          overwrite: true
+          body: "Signed APK Release"
 
 
 
