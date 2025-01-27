@@ -43,7 +43,9 @@ speechBottomSheet(
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        }
                         locator
                             .get<TranslatorCubit>()
                             .fetchTranslatorPage(text,"");
