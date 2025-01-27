@@ -26,6 +26,11 @@ jobs:
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > keystore.jks
 
+      - name: Create API Key File
+        run: |
+          mkdir -p lib/utils
+          echo "const String KEY = '${{ secrets.API_KEY }}';" > lib/utils/key.dart
+
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
@@ -82,7 +87,7 @@ jobs:
       - name: Upload APK to Release
       - uses: svenstaro/upload-release-action@v2
         with:
-            repo_token: ${{ secrets.TOKEN }}
+            repo_token: ${{ secrets.GITHUB_TOKEN }}
             artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab,build/ios_build.tar.gz"
             tag: v${{ env.VERSION }}
             overwrite: true
